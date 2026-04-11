@@ -17,6 +17,10 @@ return {
     keys = { { "<leader>e", "<cmd>NvimTreeToggle<CR>", desc = "Explorer toggle" } },
     config = function()
       require("nvim-tree").setup({
+        update_focused_file = {
+          enable     = true,   -- highlight and scroll to the current file
+          update_root = false, -- don't change root when file is outside cwd
+        },
         on_attach = function(bufnr)
           local api     = require("nvim-tree.api")
           local bufopts = { noremap = true, silent = true, buffer = bufnr }
