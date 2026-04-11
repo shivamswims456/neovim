@@ -44,10 +44,13 @@ return {
     config = function()
       require("mini.surround").setup({
         mappings = {
-          add     = "S",  -- visual: select + S + char
-          delete  = "D",
-          replace = "R",
-          find    = "F",
+          add            = "gza",  -- gza + char  (add surrounding)
+          delete         = "gzd",  -- gzd         (delete surrounding)
+          replace        = "gzr",  -- gzr + char  (replace surrounding)
+          find           = "gzf",  -- gzf         (find surrounding)
+          find_left      = "gzF",  -- gzF         (find surrounding, left)
+          highlight      = "gzh",  -- gzh         (highlight surrounding)
+          update_n_lines = "gzn",  -- gzn         (update n_lines)
         },
       })
     end,
@@ -77,23 +80,5 @@ return {
     end,
   },
 
-  -- --------------------------------------------------------------------------
-  -- Renamer (F2 popup rename)
-  -- --------------------------------------------------------------------------
-  {
-    "filipdutescu/renamer.nvim",
-    branch = "master",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = { "<F2>" },
-    config = function()
-      require("renamer").setup({
-        title        = "Rename Symbol",
-        padding      = { top = 0, left = 1, bottom = 0, right = 1 },
-        border       = true,
-        border_chars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-        show_refs    = true,
-        with_qf_list = true,
-      })
-    end,
-  },
+  -- Renamer is replaced by vim.lsp.buf.rename() + dressing.nvim (see keymaps.lua)
 }

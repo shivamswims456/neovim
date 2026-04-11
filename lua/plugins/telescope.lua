@@ -11,8 +11,12 @@ return {
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
     },
     cmd  = "Telescope",
-    -- Keys here only for lazy-loading trigger; actual mappings live in keymaps.lua
-    keys = { "<leader>f", "<leader>F", "<leader>FW", "<leader>g" },
+    keys = {
+      { "<leader>f",  "<cmd>Telescope find_files<CR>",                            desc = "Find files" },
+      { "<leader>F",  "<cmd>Telescope live_grep<CR>",                             desc = "Live grep" },
+      { "<leader>fw", function() require("telescope.builtin").grep_string() end,  desc = "Grep word under cursor" },
+      { "<leader>g",  "<cmd>Telescope frecency<CR>",                              desc = "Frecency" },
+    },
     config = function()
       local telescope = require("telescope")
       telescope.setup({

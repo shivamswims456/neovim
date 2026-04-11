@@ -20,42 +20,12 @@ map("n", "<C-x>", ":bd!<CR>", vim.tbl_extend("force", opts, { desc = "Force clos
 map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", vim.tbl_extend("force", opts, { desc = "Explorer toggle" }))
 
 -- =============================================================================
--- Telescope
+-- Telescope (keymaps defined in plugins/telescope.lua keys spec for correct lazy loading)
 -- =============================================================================
 
--- Find files (like VSCode Ctrl+P)
-map("n", "<leader>f", function()
-  require("telescope.builtin").find_files()
-end, vim.tbl_extend("force", opts, { desc = "Find files" }))
-
--- Find strings / live grep (like VSCode Ctrl+Shift+F)
-map("n", "<leader>F", function()
-  require("telescope.builtin").live_grep()
-end, vim.tbl_extend("force", opts, { desc = "Live grep (project)" }))
-
--- Grep word under cursor
-map("n", "<leader>FW", function()
-  require("telescope.builtin").grep_string()
-end, vim.tbl_extend("force", opts, { desc = "Grep word under cursor" }))
-
--- Recent files via frecency
-map("n", "<leader>g", "<cmd>Telescope frecency<CR>", vim.tbl_extend("force", opts, { desc = "Frecency (recent files)" }))
-
 -- =============================================================================
--- Spectre (find & replace)
+-- Spectre (keymaps defined in plugins/spectre.lua keys spec)
 -- =============================================================================
-
-map("n", "<leader>R", function()
-  require("spectre").open()
-end, vim.tbl_extend("force", opts, { desc = "Spectre: open" }))
-
-map("n", "<leader>Rw", function()
-  require("spectre").open_visual({ select_word = true })
-end, vim.tbl_extend("force", opts, { desc = "Spectre: word under cursor" }))
-
-map("n", "<leader>Rf", function()
-  require("spectre").open_file_search({ select_word = true })
-end, vim.tbl_extend("force", opts, { desc = "Spectre: current file" }))
 
 -- =============================================================================
 -- Session (auto-session)
@@ -88,12 +58,10 @@ map("n", "<leader>dS", "<cmd>lua require('neotest').summary.toggle()<CR>",
   vim.tbl_extend("force", opts, { desc = "Test: summary" }))
 
 -- =============================================================================
--- Renamer (F2)
+-- Rename symbol (F2) — uses vim.lsp.buf.rename(), dressing.nvim provides the UI
 -- =============================================================================
 
-map("n", "<F2>", function()
-  require("renamer").rename()
-end, { desc = "Rename symbol (popup)" })
+map("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
 -- =============================================================================
 -- TypeScript tools

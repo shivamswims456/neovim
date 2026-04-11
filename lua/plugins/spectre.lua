@@ -6,8 +6,11 @@ return {
   {
     "nvim-pack/nvim-spectre",
     dependencies = { "nvim-lua/plenary.nvim" },
-    -- lazy-load on the keymaps defined in keymaps.lua
-    keys = { "<leader>R", "<leader>Rw", "<leader>Rf" },
+    keys = {
+      { "<leader>R",  function() require("spectre").open() end,                            desc = "Spectre: open" },
+      { "<leader>Rw", function() require("spectre").open_visual({ select_word = true }) end, desc = "Spectre: word under cursor" },
+      { "<leader>Rf", function() require("spectre").open_file_search({ select_word = true }) end, desc = "Spectre: current file" },
+    },
     config = function()
       require("spectre").setup({
         highlight = {
