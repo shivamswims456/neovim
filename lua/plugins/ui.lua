@@ -29,11 +29,24 @@ return {
 
           vim.keymap.set("n", "r", function()
             local node = api.tree.get_node_under_cursor()
+            if not node then return end
+            local dir = vim.fn.fnamemodify(node.absolute_path, ":h")
             vim.ui.input({ prompt = "Rename to: ", default = node.name }, function(new_name)
-              if new_name and #new_name > 0 then
-                vim.cmd("edit " .. node.absolute_path)
-                vim.cmd("RopeRename " .. new_name)
+              if not new_name or #new_name == 0 then return end
+              local new_path = dir .. "/" .. new_name
+              -- Close buffer if file is open, then rename on disk
+              for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_get_name(buf) == node.absolute_path then
+                  vim.api.nvim_buf_delete(buf, { force = true })
+                  break
+                end
+              end
+              local ok, err = vim.loop.fs_rename(node.absolute_path, new_path)
+              if ok then
+                vim.cmd("edit " .. vim.fn.fnameescape(new_path))
                 api.tree.reload()
+              else
+                vim.notify("Rename failed: " .. tostring(err), vim.log.levels.ERROR)
               end
             end)
           end, bufopts)
