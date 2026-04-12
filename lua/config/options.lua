@@ -4,22 +4,22 @@
 
 local opt = vim.opt
 
--- Session options (from original config)
-if not string.find(vim.o.sessionoptions, "localoptions") then
-  vim.o.sessionoptions = vim.o.sessionoptions .. ",localoptions"
-end
+-- Session options: explicitly exclude localoptions so sessions never
+-- save/restore display settings like foldcolumn, signcolumn etc.
+vim.o.sessionoptions = vim.o.sessionoptions:gsub(",localoptions", ""):gsub("localoptions,", ""):gsub("localoptions", "")
 
 -- Folding (nvim-ufo)
-opt.foldcolumn     = "1"
+opt.foldcolumn     = "0"   -- no fold column
 opt.foldlevel      = 99
 opt.foldlevelstart = 99
 opt.foldenable     = true
+opt.statuscolumn   = ""    -- clear any statuscolumn (removes ufo fold level numbers)
 
 -- Editing
 opt.number         = true
-opt.relativenumber = true
+opt.relativenumber = false
 opt.cursorline     = true
-opt.signcolumn     = "yes"
+opt.signcolumn     = "no"
 opt.wrap           = false
 opt.scrolloff      = 8
 opt.sidescrolloff  = 8

@@ -26,3 +26,12 @@ vim.lsp.handlers["textDocument/rename"] = function(err, result, ctx, config)
   orig_rename(err, result, ctx, config)
   vim.cmd("wa")
 end
+
+-- Enforce no extra columns on every buffer — overrides plugins that set them
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
+  callback = function()
+    vim.opt_local.foldcolumn  = "0"
+    vim.opt_local.signcolumn  = "no"
+    vim.opt_local.statuscolumn = ""
+  end,
+})
