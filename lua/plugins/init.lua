@@ -25,12 +25,27 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      ensure_installed = { "python", "typescript", "tsx", "javascript", "lua" },
-      highlight        = { enable = true },
-      indent           = { enable = true },
-      auto_install     = true,
-    },
+    config = function()
+      -- New main branch API: no nvim-treesitter.configs, use vim.treesitter directly
+      -- Just install parsers; highlight/indent are handled by nvim's built-in treesitter
+      local ok, ts = pcall(require, "nvim-treesitter")
+      if ok and ts.setup then
+        ts.setup({
+          ensure_installed = { "python", "typescript", "tsx", "javascript", "lua" },
+          auto_install     = true,
+        })
+      else
+        -- Fallback: install parsers directly via the install module
+        local install = require("nvim-treesitter.install")
+        install.ensure_installed({ "python", "typescript", "tsx", "javascript", "lua" })
+      end
+      -- Enable highlight and indent via built-in API
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(ev)
+          pcall(vim.treesitter.start, ev.buf)
+        end,
+      })
+    end,
   },
 
   -- --------------------------------------------------------------------------

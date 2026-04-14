@@ -8,21 +8,14 @@ return {
       vim.o.foldlevel      = 99
       vim.o.foldlevelstart = 99
       vim.o.foldenable     = true
+      vim.o.statuscolumn   = ""
 
       require("ufo").setup({
-        -- Don't let ufo touch statuscolumn at all
-        fold_virt_text_handler = nil,
-        provider_selector = function(_, filetype, _)
-          local ft_map = {
-            python     = { "treesitter", "indent" },
-            typescript = { "lsp", "treesitter" },
-            javascript = { "lsp", "treesitter" },
-          }
-          return ft_map[filetype] or { "treesitter", "indent" }
+        provider_selector = function()
+          return { "lsp", "indent" }
         end,
       })
 
-      -- Override whatever ufo sets on each buffer after it attaches
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         callback = function()
           vim.opt_local.foldcolumn = "0"
