@@ -13,11 +13,11 @@ return {
         direction       = "float",
         float_opts = {
           border   = "curved",
-          width    = math.floor(vim.o.columns * 0.85),
-          height   = math.floor(vim.o.lines * 0.8),
+          width    = math.floor(vim.o.columns * 0.95),
+          height   = math.floor(vim.o.lines * 0.90),
           winblend = 3,
         },
-        shade_terminals = false,
+        shade_terminals = true,
         persist_mode    = true,   -- remember insert/normal mode between toggles
       })
 
