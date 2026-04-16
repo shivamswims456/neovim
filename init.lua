@@ -19,7 +19,6 @@ vim.g.maplocalleader = " "
 require("lazy").setup("plugins", {
   change_detection = { notify = false },
 })
-
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
