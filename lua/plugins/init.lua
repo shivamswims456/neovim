@@ -62,6 +62,7 @@ return {
     },
     lazy = false,
     config = function()
+      require("mason").setup()
       -- Mason: ensure servers are installed
       require("mason-lspconfig").setup({
         ensure_installed = { "pyright", "lua_ls" },
@@ -103,6 +104,7 @@ return {
       "hrsh7th/cmp-path",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
+     "rafamadriz/friendly-snippets",
     },
     config = function()
       local cmp    = require("cmp")
