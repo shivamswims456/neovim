@@ -19,36 +19,6 @@ return {
   },
 
   -- --------------------------------------------------------------------------
-  -- Treesitter
-  -- --------------------------------------------------------------------------
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      -- New main branch API: no nvim-treesitter.configs, use vim.treesitter directly
-      -- Just install parsers; highlight/indent are handled by nvim's built-in treesitter
-      local ok, ts = pcall(require, "nvim-treesitter")
-      if ok and ts.setup then
-        ts.setup({
-          ensure_installed = { "python", "typescript", "tsx", "javascript", "lua" },
-          auto_install     = true,
-        })
-      else
-        -- Fallback: install parsers directly via the install module
-        local install = require("nvim-treesitter.install")
-        install.ensure_installed({ "python", "typescript", "tsx", "javascript", "lua" })
-      end
-      -- Enable highlight and indent via built-in API
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function(ev)
-          pcall(vim.treesitter.start, ev.buf)
-        end,
-      })
-    end,
-  },
-
-  -- --------------------------------------------------------------------------
   -- LSP layer (mason + lspconfig)
   -- --------------------------------------------------------------------------
   { "williamboman/mason.nvim",           build = ":MasonUpdate", config = true },
@@ -129,7 +99,16 @@ return {
       })
     end,
   },
-
+  {
+    "romus204/tree-sitter-manager.nvim",
+    config = function()
+      require("tree-sitter-manager").setup({
+        ensure_installed = { "python", "typescript", "tsx", "javascript", "lua" },
+        auto_install = true,
+        highlight = true,
+      })
+    end,
+  },
   -- --------------------------------------------------------------------------
   -- UI helpers
   -- --------------------------------------------------------------------------
