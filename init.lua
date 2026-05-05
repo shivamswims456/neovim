@@ -38,4 +38,4 @@ require("config.commands")
 -- after your colorscheme line
 local hl = vim.api.nvim_set_hl
 hl(0, "@variable.parameter", { fg = "#00BBC9" }) -- kwarg name: username=
-hl(0, "@module.python", { fg = "#0897B4" })
+-- hl(0, "@module.python", { fg = "#0897B4" })

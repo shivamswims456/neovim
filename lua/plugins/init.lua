@@ -35,7 +35,7 @@ return {
       require("mason").setup()
       -- Mason: ensure servers are installed
       require("mason-lspconfig").setup({
-        ensure_installed = { "pyright", "lua_ls" },
+        ensure_installed = { "pyright", "lua_ls", "emmet_language_server" },
       })
 
       -- Inject cmp capabilities into every server via the wildcard config.
