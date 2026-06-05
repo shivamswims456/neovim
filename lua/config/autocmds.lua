@@ -2,6 +2,35 @@
 -- lua/config/autocmds.lua
 -- =============================================================================
 
+-- Ensure css`...` in Lit files gets real CSS highlighting.
+-- tree-sitter-manager's ecma queries map css`` to "styled" (no parser).
+-- We build the javascript injections from ecma+jsx source directly so
+-- this survives tree-sitter-manager reinstalling those query files.
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    local site = vim.fn.stdpath("data") .. "/site/queries"
+    local function read(path)
+      local fh = io.open(path)
+      if not fh then return "" end
+      local s = fh:read("*a"); fh:close(); return s
+    end
+    local combined = read(site .. "/ecma/injections.scm")
+      .. "\n" .. read(site .. "/jsx/injections.scm")
+      .. "\n" .. [[
+; Lit: css`...` → real CSS (overrides ecma's css→styled mapping)
+(call_expression
+  function: (identifier) @_tag
+  (#eq? @_tag "css")
+  arguments: (template_string) @injection.content
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.include-children)
+  (#set! injection.language "css"))
+]]
+    pcall(vim.treesitter.query.set, "javascript", "injections", combined)
+  end,
+})
+
 -- Show diagnostics float on CursorHold
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
