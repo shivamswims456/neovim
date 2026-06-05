@@ -44,6 +44,7 @@ return {
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
       })
 
+
       vim.lsp.enable({ "pyright", "lua_ls" })
 
       -- LSP keymaps on attach
@@ -103,7 +104,7 @@ return {
     "romus204/tree-sitter-manager.nvim",
     config = function()
       require("tree-sitter-manager").setup({
-        ensure_installed = { "python", "typescript", "tsx", "javascript", "lua" },
+        ensure_installed = { "python", "typescript", "tsx", "javascript", "lua", "css", "html" },
         auto_install = true,
         highlight = true,
       })

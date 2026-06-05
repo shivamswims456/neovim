@@ -34,7 +34,6 @@ require("config.keymaps")
 require("config.autocmds")
 require("config.diagnostics")
 require("config.commands")
-
 -- after your colorscheme line
 local hl = vim.api.nvim_set_hl
 hl(0, "@variable.parameter", { fg = "#00BBC9" }) -- kwarg name: username=

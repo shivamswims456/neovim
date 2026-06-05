@@ -15,6 +15,9 @@ return {
           client.server_capabilities.documentFormattingProvider = false
         end,
         settings = {
+          tsserver_plugins = {
+            "ts-lit-plugin",
+          },
           tsserver_file_preferences = {
             includeInlayParameterNameHints        = "all",
             includeInlayFunctionParameterTypeHints = true,
