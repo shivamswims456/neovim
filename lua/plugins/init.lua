@@ -35,7 +35,7 @@ return {
       require("mason").setup()
       -- Mason: ensure servers are installed
       require("mason-lspconfig").setup({
-        ensure_installed = { "pyright", "lua_ls", "emmet_language_server" },
+        ensure_installed = { "pyright", "lua_ls", "emmet_language_server", "css-lsp" },
       })
 
       -- Inject cmp capabilities into every server via the wildcard config.
@@ -45,7 +45,7 @@ return {
       })
 
 
-      vim.lsp.enable({ "pyright", "lua_ls" })
+      vim.lsp.enable({ "pyright", "lua_ls", "cssls" })
 
       -- LSP keymaps on attach
       vim.api.nvim_create_autocmd("LspAttach", {
