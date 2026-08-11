@@ -8,16 +8,17 @@ return {
   -- --------------------------------------------------------------------------
   -- Colorscheme
   -- --------------------------------------------------------------------------
-  {
-    "projekt0n/github-nvim-theme",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("github-theme").setup({})
-      vim.cmd("colorscheme github_dark_dimmed")
-    end,
-  },
-
+  --
+   {
+     "projekt0n/github-nvim-theme",
+     lazy = false,
+     priority = 1000,
+     config = function()
+       require("github-theme").setup({})
+       vim.cmd("colorscheme github_dark_dimmed")
+     end,
+   },
+  -- --
   -- --------------------------------------------------------------------------
   -- LSP layer (mason + lspconfig)
   -- --------------------------------------------------------------------------
@@ -35,7 +36,7 @@ return {
       require("mason").setup()
       -- Mason: ensure servers are installed
       require("mason-lspconfig").setup({
-        ensure_installed = { "pyright", "lua_ls", "emmet_language_server", "css-lsp" },
+        ensure_installed = { "pyright", "lua_ls", "emmet_language_server" },
       })
 
       -- Inject cmp capabilities into every server via the wildcard config.
@@ -45,7 +46,7 @@ return {
       })
 
 
-      vim.lsp.enable({ "pyright", "lua_ls", "cssls" })
+      vim.lsp.enable({ "pyright", "lua_ls" })
 
       -- LSP keymaps on attach
       vim.api.nvim_create_autocmd("LspAttach", {

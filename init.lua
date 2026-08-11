@@ -18,6 +18,12 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader      = " "
 vim.g.maplocalleader = " "
+
+-- Must run before lazy.setup(): plugins/session restore can construct the
+-- "javascript" treesitter parser as a side effect, which freezes whatever
+-- injections query is registered at that moment.
+require("config.treesitter")
+
 -- in your init.lua, after colorscheme is set
 require("lazy").setup("plugins", {
   change_detection = { notify = false },

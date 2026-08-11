@@ -13,7 +13,7 @@ return {
     cmd  = "Telescope",
     keys = {
       { "<leader>f",  "<cmd>Telescope find_files<CR>",                            desc = "Find files" },
-      { "<leader>F",  "<cmd>Telescope live_grep<CR>",                             desc = "Live grep" },
+      { "<leader>q",  "<cmd>Telescope live_grep<CR>",                             desc = "Live grep" },
       { "<leader>fw", function() require("telescope.builtin").grep_string() end,  desc = "Grep word under cursor" },
       { "<leader>g",  "<cmd>Telescope frecency<CR>",                              desc = "Frecency" },
     },
