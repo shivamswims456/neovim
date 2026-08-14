@@ -12,6 +12,15 @@ local opts = { noremap = true, silent = true }
 map("n", "<C-x>", ":bd!<CR>", vim.tbl_extend("force", opts, { desc = "Force close buffer" }))
 
 -- =============================================================================
+-- Visual-mode indent / de-indent keeps the selection, so you can press
+-- < / > repeatedly to shift more levels instead of losing the selection
+-- (stock behavior returns to normal mode after a single shift).
+-- =============================================================================
+
+map("x", "<", "<lt>gv", vim.tbl_extend("force", opts, { desc = "De-indent and keep selection" }))
+map("x", ">", ">gv",  vim.tbl_extend("force", opts, { desc = "Indent and keep selection" }))
+
+-- =============================================================================
 -- Explorer
 -- =============================================================================
 
