@@ -30,3 +30,11 @@ vim.lsp.config("openfga", {
 })
 
 vim.lsp.enable("openfga")
+
+-- Tree-sitter highlighting (needs parser/fga.so + queries/fga/ in ~/.local/share/nvim/site)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "fga",
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
+  end,
+})
